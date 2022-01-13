@@ -18,21 +18,15 @@ audio {
 }
 ul {
   padding: 0;
-  border: 1px solid #eee;
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-}
-li:nth-child(even) {
-  background: #fff;
-}
-li:nth-child(odd) {
-  background: #eee;
 }
 li {
   list-style: none;
   padding: 5px;
   cursor: pointer;
+  position: relative;
 }
 li:hover {
   background: #ccc;
@@ -50,4 +44,24 @@ li:hover {
 }
 .small-play-icon {
   width: 12px;
+}
+.sound-wave {
+  width: 35px;
+  position: absolute;
+  top: -5px;
+  left: 20px;
+}
+.full-playlist {
+  background: #f7f7f7;
+}
+.author {
+  display: block;
+  font-size: 14px;
+  color:#777;
+}
+.wave-container {
+  position: relative;
+}
+.track-title {
+  font-weight: 500;
 }

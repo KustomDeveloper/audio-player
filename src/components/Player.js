@@ -3,16 +3,17 @@ import previous from '../img/previous.svg';
 import play from '../img/play.svg';
 import pause from '../img/pause.svg';
 import next from '../img/next.svg';
-import PlayIcon from './PlayIcon';
+import SoundWave from './SoundWave';
 
 const AudioFiles = () => {
     const [audioTracks, setAudioTracks] = useState({});
-    const [audioSrc, setAudioSrc] = useState("");
-    const [songTitle, setSongTitle] = useState([]);
     const [playlist, setPlaylist] = useState([]);
+    const [audioSrc, setAudioSrc] = useState([]);
+    const [songTitle, setSongTitle] = useState([]);
     const [item, setItem] = useState(0);
     const [isPlaying, setisPlaying] = useState(null);
     const audioPlayer = useRef(null);
+    const author = "Julian Awad";
     const playlistArray = [];
     const songtitleArray = [];
 
@@ -120,6 +121,7 @@ const AudioFiles = () => {
 
     const playTrack = (e) => {
       const src = e.target.getAttribute("data-src");
+      console.log(src)
       const i = parseInt(e.target.getAttribute("data-item"));
 
       setItem(i);
@@ -178,20 +180,26 @@ const AudioFiles = () => {
     return(
         <React.Fragment>
             
-            <div className="song-title">{ songTitle ? songTitle[item] : null }</div>
+            <div className="song-title">{ songTitle ? songTitle[item] : null } <span className="author">{author}</span></div>
 
             <div className="player-controls"><img onClick={ e => playPreviousControl(e) } src={previous} /> <img onClick={ e => playControl(e) } src={isPlaying === null || isPlaying === false ? play : pause} /> <img onClick={ e => playNextControl(e) } src={next} /></div>
 
             <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc} controls autoPlay />
-            <ul>
-            {Object.keys(audioTracks).map((key, i) => {
-                return(
-                    <li key={i} data-item={i} data-src={audioTracks[key].cloud_url} onClick={e => playTrack(e)} className="listItem">
-                      {item == i ? <PlayIcon /> : null} {audioTracks[key].title.rendered}
-                    </li>
-                )
-            })}
-            </ul>
+
+            <div className="full-playlist">
+              <ul>
+              {Object.keys(audioTracks).map((key, i) => {
+                  return(
+                      <li className="listItem">
+                        <span key={i} data-item={i} data-src={audioTracks[key].cloud_url} onClick={e => playTrack(e)} className="track-title">{audioTracks[key].title.rendered}
+                        </span> 
+                        <span className="wave-container">{item == i ? <SoundWave /> : null}</span> 
+                        <span className="author">{author}</span>
+                      </li>
+                  )
+              })}
+              </ul>
+            </div>
         </React.Fragment>
     )
 }

@@ -5,7 +5,7 @@ import Player from './components/Player';
 function App() {
   return (
     <div className="App">
-       <Logo />
+       {/* <Logo /> */}
        <Player />
     </div>
   );
