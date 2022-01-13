@@ -28,9 +28,9 @@ li {
   cursor: pointer;
   position: relative;
 }
-li:hover {
+/* li:hover {
   background: #ccc;
-}
+} */
 #root {
   width: 100%;
 }
@@ -64,4 +64,19 @@ li:hover {
 }
 .track-title {
   font-weight: 500;
+}
+.track-title:hover {
+  color: rgb(22, 164, 246)
+}
+.album {
+  max-width: 100px;
+  position: absolute;
+  left: -50px;
+}
+.album-art-lg .album {
+  width: 100px;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+  left: 0;
 }

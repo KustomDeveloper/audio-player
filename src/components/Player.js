@@ -4,6 +4,8 @@ import play from '../img/play.svg';
 import pause from '../img/pause.svg';
 import next from '../img/next.svg';
 import SoundWave from './SoundWave';
+import AlbumArt from './AlbumArt';
+
 
 const AudioFiles = () => {
     const [audioTracks, setAudioTracks] = useState({});
@@ -179,6 +181,7 @@ const AudioFiles = () => {
 
     return(
         <React.Fragment>
+            <div className="album-art-lg">{<AlbumArt />}</div>
             
             <div className="song-title">{ songTitle ? songTitle[item] : null } <span className="author">{author}</span></div>
 
@@ -191,6 +194,7 @@ const AudioFiles = () => {
               {Object.keys(audioTracks).map((key, i) => {
                   return(
                       <li className="listItem">
+                        <span className="album-art">{<AlbumArt />}</span>
                         <span key={i} data-item={i} data-src={audioTracks[key].cloud_url} onClick={e => playTrack(e)} className="track-title">{audioTracks[key].title.rendered}
                         </span> 
                         <span className="wave-container">{item == i ? <SoundWave /> : null}</span> 
