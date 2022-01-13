@@ -1,38 +1,53 @@
-.App {
+.logo {
+  width: 100%;
+  max-width: 120px;
+  margin: 0 auto;
+  padding: 20px;
+}
+audio {
+  outline: none;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+  display: block;
+  display: none;
+}
+.song-title {
   text-align: center;
+  font-size: 24px;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+ul {
+  padding: 0;
+  border: 1px solid #eee;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+li:nth-child(even) {
+  background: #fff;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+li:nth-child(odd) {
+  background: #eee;
 }
-
-.App-link {
-  color: #61dafb;
+li {
+  list-style: none;
+  padding: 5px;
+  cursor: pointer;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+li:hover {
+  background: #ccc;
+}
+#root {
+  width: 100%;
+}
+.player-controls {
+  width: 100%;
+  max-width: 165px;
+  margin: 15px auto;
+}
+.player-controls img {
+  max-width: 50px;
+}
+.small-play-icon {
+  width: 12px;
 }
