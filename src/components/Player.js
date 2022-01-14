@@ -10,7 +10,7 @@ import AlbumArt from './AlbumArt';
 const AudioFiles = () => {
     const [audioTracks, setAudioTracks] = useState({});
     const [playlist, setPlaylist] = useState([]);
-    const [audioSrc, setAudioSrc] = useState([]);
+    const [audioSrc, setAudioSrc] = useState();
     const [songTitle, setSongTitle] = useState([]);
     const [item, setItem] = useState(0);
     const [isPlaying, setisPlaying] = useState(null);
@@ -18,6 +18,8 @@ const AudioFiles = () => {
     const author = "Julian Awad";
     const playlistArray = [];
     const songtitleArray = [];
+
+    const firstTrack = playlist[0];
 
     async function checkStorage() {
         const data = await getTrackData();
@@ -187,7 +189,11 @@ const AudioFiles = () => {
 
             <div className="player-controls"><img onClick={ e => playPreviousControl(e) } src={previous} /> <img onClick={ e => playControl(e) } src={isPlaying === null || isPlaying === false ? play : pause} /> <img onClick={ e => playNextControl(e) } src={next} /></div>
 
-            <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc} controls autoPlay />
+            <div class="slidecontainer">
+              <input type="range" min="1" max="100" value="50" class="slider" id="myRange" />
+            </div>
+
+            <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc ? audioSrc : firstTrack} controls autoPlay />
 
             <div className="full-playlist">
               <ul>
