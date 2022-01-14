@@ -1,5 +1,5 @@
 import React from "react";
-import album from "../img/album.svg";
+import album from "../img/Coming-Home-Album-Cover.png";
 
 
 const AlbumArt = () => {
