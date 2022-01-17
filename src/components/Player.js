@@ -14,12 +14,36 @@ const AudioFiles = () => {
     const [songTitle, setSongTitle] = useState([]);
     const [item, setItem] = useState(0);
     const [isPlaying, setisPlaying] = useState(null);
+    const [rangeSlider, setRangeSlider] = useState(0);
     const audioPlayer = useRef(null);
+    const audioSlider = useRef(null);
     const author = "Julian Awad";
     const playlistArray = [];
     const songtitleArray = [];
 
     const firstTrack = playlist[0];
+
+    const seekSlider = (e) => {
+      setRangeSlider(e.target.value);
+      const totalTime = audioPlayer.current.duration;
+      const currentTime = (totalTime / 100);
+      const nowTime = (currentTime * rangeSlider);
+
+      audioPlayer.current.currentTime = nowTime;
+    }
+
+    function convertTime(time) {    
+      var mins = Math.floor(time / 60);
+      if (mins < 10) {
+        mins = '0' + String(mins);
+      }
+      var secs = Math.floor(time % 60);
+      if (secs < 10) {
+        secs = '0' + String(secs);
+      }
+  
+      return mins + ':' + secs;
+    }
 
     async function checkStorage() {
         const data = await getTrackData();
@@ -183,25 +207,29 @@ const AudioFiles = () => {
 
     return(
         <React.Fragment>
-            <div className="album-art-lg">{<AlbumArt />}</div>
-            
-            <div className="song-title">{ songTitle ? songTitle[item] : null } <span className="author">{author}</span></div>
+            <div className="current-track">
+              <div className="album-art-lg">{<AlbumArt />}</div>
+              
+              <div className="main-player">
+                <div className="song-title">{ songTitle ? songTitle[item] : null } <span className="author">{author}</span></div>
 
-            <div className="player-controls"><img onClick={ e => playPreviousControl(e) } src={previous} /> <img onClick={ e => playControl(e) } src={isPlaying === null || isPlaying === false ? play : pause} /> <img onClick={ e => playNextControl(e) } src={next} /></div>
+                <div className="player-controls"><img onClick={ e => playPreviousControl(e) } src={previous} /> <img onClick={ e => playControl(e) } src={isPlaying === null || isPlaying === false ? play : pause} /> <img onClick={ e => playNextControl(e) } src={next} /></div>
 
-            <div class="slidecontainer">
-              <input type="range" min="1" max="100" value="50" class="slider" id="myRange" />
+                <div className="slidecontainer">
+                  <input onChange={e => seekSlider(e)} ref={audioSlider} type="range" min="0" max="100" value={rangeSlider} className="range-slider" id="range-slider" />
+                </div>
+
+                <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc ? audioSrc : firstTrack} controls autoPlay />
+              </div>
             </div>
-
-            <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc ? audioSrc : firstTrack} controls autoPlay />
-
+            
             <div className="full-playlist">
               <ul>
               {Object.keys(audioTracks).map((key, i) => {
                   return(
-                      <li className="listItem">
+                      <li key={i} className="listItem">
                         <span className="album-art">{<AlbumArt />}</span>
-                        <span key={i} data-item={i} data-src={audioTracks[key].cloud_url} onClick={e => playTrack(e)} className="track-title">{audioTracks[key].title.rendered}
+                        <span data-item={i} data-src={audioTracks[key].cloud_url} onClick={e => playTrack(e)} className="track-title">{audioTracks[key].title.rendered}
                         </span> 
                         <span className="wave-container">{item == i ? <SoundWave /> : null}</span> 
                         <span className="author">{author}</span>
