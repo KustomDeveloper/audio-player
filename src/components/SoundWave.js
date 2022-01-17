@@ -1,9 +1,9 @@
 import React from 'react';
-import soundwaveicon from '../img/sound-wave.svg';
+import musicbarsanimated from '../img/music-bars-animated.svg';
 
 const SoundWave = () => {
   return (
-    <img className="sound-wave" src={soundwaveicon} />
+    <img className="sound-wave" src={musicbarsanimated} />
   ) 
 }
 

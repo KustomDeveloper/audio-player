@@ -30,6 +30,8 @@ const AudioFiles = () => {
       const nowTime = (currentTime * rangeSlider);
 
       audioPlayer.current.currentTime = nowTime;
+      // audioPlayer.current.play();
+      // setisPlaying(true);
     }
 
     function convertTime(time) {    
