@@ -5,6 +5,7 @@ import pause from '../img/pause.svg';
 import next from '../img/next.svg';
 import SoundWave from './SoundWave';
 import AlbumArt from './AlbumArt';
+import TrackTime from "./TrackTime";
 
 
 const AudioFiles = () => {
@@ -17,6 +18,7 @@ const AudioFiles = () => {
     const [rangeSlider, setRangeSlider] = useState(0);
     const audioPlayer = useRef(null);
     const audioSlider = useRef(null);
+
     const author = "Julian Awad";
     const playlistArray = [];
     const songtitleArray = [];
@@ -24,27 +26,14 @@ const AudioFiles = () => {
     const firstTrack = playlist[0];
 
     const seekSlider = (e) => {
-      setRangeSlider(e.target.value);
-      const totalTime = audioPlayer.current.duration;
-      const currentTime = (totalTime / 100);
-      const nowTime = (currentTime * rangeSlider);
+      if(isPlaying) {
+        setRangeSlider(e.target.value);
+        const totalTime = audioPlayer.current.duration;
+        const currentTime = (totalTime / 100);
+        const nowTime = (currentTime * rangeSlider);
 
-      audioPlayer.current.currentTime = nowTime;
-      // audioPlayer.current.play();
-      // setisPlaying(true);
-    }
-
-    function convertTime(time) {    
-      var mins = Math.floor(time / 60);
-      if (mins < 10) {
-        mins = '0' + String(mins);
+        audioPlayer.current.currentTime = nowTime;
       }
-      var secs = Math.floor(time % 60);
-      if (secs < 10) {
-        secs = '0' + String(secs);
-      }
-  
-      return mins + ':' + secs;
     }
 
     async function checkStorage() {
@@ -109,6 +98,7 @@ const AudioFiles = () => {
         storeData('audio-src', playlist[prev]);
         setisPlaying(true);
 
+        setRangeSlider(0);
         audioPlayer.current.play();
 
       } else {
@@ -119,6 +109,7 @@ const AudioFiles = () => {
         storeData('audio-src', playlist[prev]);
         setisPlaying(true);
 
+        setRangeSlider(0);
         audioPlayer.current.play();
       }
     }
@@ -135,6 +126,7 @@ const AudioFiles = () => {
         storeData('audio-src', playlist[next]);
         setisPlaying(true);
 
+        setRangeSlider(0);
         audioPlayer.current.play();
 
       } else {
@@ -145,6 +137,7 @@ const AudioFiles = () => {
         storeData('audio-src', playlist[next]);
         setisPlaying(true);
 
+        setRangeSlider(0);
         audioPlayer.current.play();
       }
     }
@@ -176,8 +169,11 @@ const AudioFiles = () => {
             storeData('track-number', itemNum);
             storeData('audio-src', playlist[itemNum]);
 
+            setRangeSlider(0);
             audioPlayer.current.play();
         } else {
+
+            setRangeSlider(0);
             setItem(0);
         }
 
@@ -218,10 +214,12 @@ const AudioFiles = () => {
                 <div className="player-controls"><img onClick={ e => playPreviousControl(e) } src={previous} /> <img onClick={ e => playControl(e) } src={isPlaying === null || isPlaying === false ? play : pause} /> <img onClick={ e => playNextControl(e) } src={next} /></div>
 
                 <div className="slidecontainer">
-                  <input onChange={e => seekSlider(e)} ref={audioSlider} type="range" min="0" max="100" value={rangeSlider} className="range-slider" id="range-slider" />
+                  <input onChange={e => seekSlider(e)} ref={audioSlider} type="range" min="0" max="100" value={rangeSlider} className="range-slider" id="range-slider" /> 
+                  <TrackTime rangeSlider={rangeSlider} setRangeSlider={setRangeSlider} audioPlayer={audioPlayer} isPlaying={isPlaying} />
                 </div>
 
                 <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc ? audioSrc : firstTrack} controls autoPlay />
+         
               </div>
             </div>
             
