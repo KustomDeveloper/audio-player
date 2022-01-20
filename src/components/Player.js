@@ -27,12 +27,18 @@ const AudioFiles = () => {
 
     const seekSlider = (e) => {
       if(isPlaying) {
+
+        console.log("Value:", e.target.value);
+
         setRangeSlider(e.target.value);
         const totalTime = audioPlayer.current.duration;
         const currentTime = (totalTime / 100);
         const nowTime = (currentTime * rangeSlider);
 
         audioPlayer.current.currentTime = nowTime;
+
+        console.log("Slider Value: ", rangeSlider);
+
       }
     }
 
@@ -144,7 +150,6 @@ const AudioFiles = () => {
 
     const playTrack = (e) => {
       const src = e.target.getAttribute("data-src");
-      console.log(src)
       const i = parseInt(e.target.getAttribute("data-item"));
 
       setItem(i);
@@ -153,6 +158,7 @@ const AudioFiles = () => {
       storeData('track-number', i);
       setisPlaying(true);
       
+      setRangeSlider(0);
       audioPlayer.current.play();
     }
 
@@ -214,7 +220,7 @@ const AudioFiles = () => {
                 <div className="player-controls"><img onClick={ e => playPreviousControl(e) } src={previous} /> <img onClick={ e => playControl(e) } src={isPlaying === null || isPlaying === false ? play : pause} /> <img onClick={ e => playNextControl(e) } src={next} /></div>
 
                 <div className="slidecontainer">
-                  <input onChange={e => seekSlider(e)} ref={audioSlider} type="range" min="0" max="100" value={rangeSlider} className="range-slider" id="range-slider" /> 
+                  <input onInput={e => seekSlider(e)} ref={audioSlider} type="range" min="0" max="100" value={rangeSlider} className="range-slider" id="range-slider" />
                   <TrackTime rangeSlider={rangeSlider} setRangeSlider={setRangeSlider} audioPlayer={audioPlayer} isPlaying={isPlaying} />
                 </div>
 

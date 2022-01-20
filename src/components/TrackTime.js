@@ -20,14 +20,14 @@ const TrackTime = ({audioPlayer, rangeSlider, setRangeSlider, isPlaying}) => {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            const totalTime = audioPlayer.current.duration;
-            const currentTime = (totalTime / 100);
-            setNowTime(currentTime * rangeSlider);
+   
+        const totalTime = audioPlayer.current.duration;
+        const currentTime = (totalTime / 100);
+        setNowTime(currentTime * rangeSlider);
 
-            setCurrentTrackTime(convertTime(nowTime));
-            setTrackDuration(convertTime(totalTime));
-        }, 500)
+        setCurrentTrackTime(convertTime(nowTime));
+        setTrackDuration(convertTime(totalTime));
+ 
     }, [rangeSlider])
 
     useEffect(() => {
