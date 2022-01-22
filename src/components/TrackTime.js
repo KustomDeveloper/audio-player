@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useEffect } from 'react/cjs/react.development';
 
-const TrackTime = ({audioPlayer, rangeSlider, setRangeSlider, isPlaying}) => {
+const TrackTime = ({audioPlayer, rangeSlider, setRangeSlider, isPlaying, isLoaded}) => {
     const [trackDuration, setTrackDuration] = useState("00:00");
     const [currentTrackTime, setCurrentTrackTime] = useState("00:00");
     const [nowTime, setNowTime] = useState(0); 
@@ -20,26 +20,25 @@ const TrackTime = ({audioPlayer, rangeSlider, setRangeSlider, isPlaying}) => {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            const totalTime = audioPlayer.current.duration;
-            const currentTime = (totalTime / 100);
-            setNowTime(currentTime * rangeSlider);
-    
-            setCurrentTrackTime(convertTime(nowTime));
-            setTrackDuration(convertTime(totalTime));
-        }, 500);
+        if(isLoaded) {
+            setTimeout(() => {
+                const totalTime = audioPlayer.current.duration;
+                const currentTime = (totalTime / 100);
+                setNowTime(currentTime * rangeSlider);
+        
+                setCurrentTrackTime(convertTime(nowTime));
+                setTrackDuration(convertTime(totalTime));
+            }, 1000)
+        }
  
-    }, [rangeSlider])
+    }, [rangeSlider, isLoaded])
 
     useEffect(() => {
         if(isPlaying) {
             setInterval(() => {
-             
                 const time = audioPlayer.current.currentTime;
-
                 setCurrentTrackTime(convertTime(time));
-                // setRangeSlider();
-            }, 10)
+            }, 500)
         }
     }, [isPlaying])
   return(

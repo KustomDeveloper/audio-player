@@ -1,3 +1,7 @@
+
+.container {
+ 
+}
 .logo {
   width: 100%;
   max-width: 120px;
@@ -24,6 +28,7 @@ ul {
 }
 li {
   list-style: none;
+  display: flex;
   padding: 10px 15px;
   cursor: pointer;
   position: relative;
@@ -41,6 +46,7 @@ li:last-of-type {
 }
 .player-controls img {
   max-width: 40px;
+  padding: 5px;
 }
 .player-controls img:hover {
   cursor: pointer;
@@ -49,10 +55,10 @@ li:last-of-type {
   width: 12px;
 }
 .sound-wave {
-  width: 35px;
+  width: 23px;
   position: absolute;
-  top: -5px;
-  left: 20px;
+  top: 0px;
+  left: 10px;
 }
 .full-playlist {
   background: #f7f7f7;
@@ -74,9 +80,8 @@ li:last-of-type {
 }
 .album {
   max-width: 40px;
-  position: absolute;
-  left: -50px;
   box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.1);
+  margin-right: 15px;
 }
 .album-art-lg .album {
   width: 100%;
@@ -103,7 +108,7 @@ li:last-of-type {
 .current-track {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  margin: 0 0 20px -20px;
 }
 .slidecontainer {
   margin: 20px 0 0 25px;
@@ -113,7 +118,7 @@ li:last-of-type {
   appearance: none;
   width: 100%;
   max-width: 130px;
-  height: 10px; 
+  height: 5px; 
   background: #d3d3d3; 
   outline: none; 
   opacity: 0.7; 
@@ -125,14 +130,14 @@ li:last-of-type {
   appearance: none;
   width: 15px; 
   height: 15px; 
-  background: #F8297E;
+  background: #DE0D65;
   cursor: pointer; 
   border-radius: 50%;
 }
 .range-slider::-moz-range-thumb {
   width: 15px; 
   height: 15px; 
-  background: #F8297E; 
+  background: #DE0D65; 
   cursor: pointer; 
 }
 input[type="range"] {
@@ -140,4 +145,14 @@ input[type="range"] {
 }
 input[type="range"]::-webkit-slider-thumb {
   pointer-events:auto;
+}
+
+@media only screen  and (max-width: 480px) {
+  .album-art-lg .album {
+    margin-left:35px;
+  }
+  .track-title {
+    font-size: 13px;
+    padding-right: 20px;
+  }
 }

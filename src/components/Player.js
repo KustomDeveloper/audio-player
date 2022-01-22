@@ -15,6 +15,7 @@ const AudioFiles = () => {
     const [songTitle, setSongTitle] = useState([]);
     const [item, setItem] = useState(0);
     const [isPlaying, setisPlaying] = useState(null);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [rangeSlider, setRangeSlider] = useState(0);
     const audioPlayer = useRef(null);
     const audioSlider = useRef(null);
@@ -27,18 +28,12 @@ const AudioFiles = () => {
 
     const seekSlider = (e) => {
       if(isPlaying) {
-
-        console.log("Value:", e.target.value);
-
         setRangeSlider(e.target.value);
         const totalTime = audioPlayer.current.duration;
         const currentTime = (totalTime / 100);
         const nowTime = (currentTime * rangeSlider);
 
         audioPlayer.current.currentTime = nowTime;
-
-        console.log("Slider Value: ", rangeSlider);
-
       }
     }
 
@@ -199,6 +194,9 @@ const AudioFiles = () => {
             setPlaylist(playlistArray);
             setSongTitle(songtitleArray);
          }) 
+         .finally(
+           setIsLoaded(true)
+         )
     }
     
     useEffect(() => {
@@ -210,7 +208,7 @@ const AudioFiles = () => {
     }, [])
 
     return(
-        <React.Fragment>
+        <div className="container">
             <div className="current-track">
               <div className="album-art-lg">{<AlbumArt />}</div>
               
@@ -221,7 +219,7 @@ const AudioFiles = () => {
 
                 <div className="slidecontainer">
                   <input onInput={e => seekSlider(e)} ref={audioSlider} type="range" min="0" max="100" value={rangeSlider} className="range-slider" id="range-slider" />
-                  <TrackTime rangeSlider={rangeSlider} setRangeSlider={setRangeSlider} audioPlayer={audioPlayer} isPlaying={isPlaying} />
+                  <TrackTime isLoaded={isLoaded} rangeSlider={rangeSlider} setRangeSlider={setRangeSlider} audioPlayer={audioPlayer} isPlaying={isPlaying} />
                 </div>
 
                 <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc ? audioSrc : firstTrack} controls autoPlay />
@@ -234,17 +232,21 @@ const AudioFiles = () => {
               {Object.keys(audioTracks).map((key, i) => {
                   return(
                       <li key={i} className="listItem">
-                        <span className="album-art">{<AlbumArt />}</span>
-                        <span data-item={i} data-src={audioTracks[key].cloud_url} onClick={e => playTrack(e)} className="track-title">{audioTracks[key].title.rendered}
-                        </span> 
-                        <span className="wave-container">{item == i ? <SoundWave /> : null}</span> 
-                        <span className="author">{author}</span>
+                        <div>
+                          <span className="album-art">{<AlbumArt />}</span>
+                        </div>
+                        <div>
+                          <span data-item={i} data-src={audioTracks[key].cloud_url} onClick={e => playTrack(e)} className="track-title">{audioTracks[key].title.rendered}
+                          </span> 
+                          <span className="wave-container">{item == i ? <SoundWave /> : null}</span> 
+                          <span className="author">{author}</span>
+                        </div>
                       </li>
                   )
               })}
               </ul>
             </div>
-        </React.Fragment>
+        </div>
     )
 }
 
