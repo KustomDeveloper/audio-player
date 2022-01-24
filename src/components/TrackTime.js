@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useEffect } from 'react/cjs/react.development';
 
-const TrackTime = ({audioPlayer, rangeSlider, setRangeSlider, isPlaying, isLoaded}) => {
+const TrackTime = ({audioPlayer, rangeSlider, setRangeSlider, isPlaying, isLoaded, audioSlider}) => {
     const [trackDuration, setTrackDuration] = useState("00:00");
     const [currentTrackTime, setCurrentTrackTime] = useState("00:00");
     const [nowTime, setNowTime] = useState(0); 
@@ -35,10 +35,11 @@ const TrackTime = ({audioPlayer, rangeSlider, setRangeSlider, isPlaying, isLoade
 
     useEffect(() => {
         if(isPlaying) {
-            setInterval(() => {
-                const time = audioPlayer.current.currentTime;
-                setCurrentTrackTime(convertTime(time));
-            }, 500)
+                setInterval(() => {
+                    const time = audioPlayer.current.currentTime;
+                    setCurrentTrackTime(convertTime(time));
+                    
+                }, 10)
         }
     }, [isPlaying])
   return(

@@ -219,7 +219,7 @@ const AudioFiles = () => {
 
                 <div className="slidecontainer">
                   <input onInput={e => seekSlider(e)} ref={audioSlider} type="range" min="0" max="100" value={rangeSlider} className="range-slider" id="range-slider" />
-                  <TrackTime isLoaded={isLoaded} rangeSlider={rangeSlider} setRangeSlider={setRangeSlider} audioPlayer={audioPlayer} isPlaying={isPlaying} />
+                  <TrackTime isLoaded={isLoaded} rangeSlider={rangeSlider} setRangeSlider={setRangeSlider} audioSlider={audioSlider} audioPlayer={audioPlayer} isPlaying={isPlaying} />
                 </div>
 
                 <audio onEnded={continuousPlay} ref={audioPlayer} src={audioSrc ? audioSrc : firstTrack} controls autoPlay />
